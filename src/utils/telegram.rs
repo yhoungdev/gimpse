@@ -1,7 +1,11 @@
 use std::env;
 use teloxide::prelude::*;
 
+use dotenv::dotenv;
+
 pub async fn send_telegram_message(content: &str) -> Result<Message, Box<dyn std::error::Error>> {
+
+    dotenv().ok();
     let bot_token = env::var("TELEGRAM_BOT_TOKEN")
         .expect("TELEGRAM_BOT_TOKEN environment variable is not set");
     let chat_id_str = env::var("TELEGRAM_CHAT_ID")
