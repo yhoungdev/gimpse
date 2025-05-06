@@ -8,3 +8,4 @@ async fn send_telegram_message(content: &str) -> ResponseResult<Message> {
     let bot = Bot::new(TELEGRAM_BOT_TOKEN);
     bot.send_message(TELEGRAM_CHAT_ID, content).await
 }
+
