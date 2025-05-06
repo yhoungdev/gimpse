@@ -1,7 +1,7 @@
 use crate::utils::telegram;
 use battery::{units::thermodynamic_temperature::degree_celsius, Battery, Manager};
 
-pub fn get_battery_info_pretty() -> Result<String, battery::Error> {
+pub async  fn get_battery_info_pretty() -> Result<String, battery::Error> {
     let manager = Manager::new()?;
     let mut batteries = manager.batteries()?;
 
@@ -54,7 +54,7 @@ pub fn get_battery_info_pretty() -> Result<String, battery::Error> {
     );
 
     if percentage < 20.0 {
-        report.push_str(" 🪫 Low battery!");
+        telegram::send_telegram_message(" 🪫 Battery is low!").await.expect("Failed to call telegram function on battery");
     }
 
     Ok(report)
