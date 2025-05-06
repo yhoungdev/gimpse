@@ -1,9 +1,11 @@
 mod monitor;
 mod utils;
+use utils::telegram;
 
-use crate::utils;
 
 
-fn main() {
-    log::info!("Starting throw dice bot...");
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    crate::utils::telegram::send_telegram_message("testing event from Rust 🦀").await?;
+    Ok(())
 }
