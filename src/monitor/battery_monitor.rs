@@ -1,7 +1,7 @@
 use crate::utils::telegram;
 use battery::{units::thermodynamic_temperature::degree_celsius, Battery, Manager};
 
-pub async  fn get_battery_info_pretty() -> Result<String, battery::Error> {
+pub async fn get_battery_info_pretty() -> Result<String, battery::Error> {
     let manager = Manager::new()?;
     let mut batteries = manager.batteries()?;
 
@@ -54,7 +54,9 @@ pub async  fn get_battery_info_pretty() -> Result<String, battery::Error> {
     );
 
     if percentage < 20.0 {
-        telegram::send_telegram_message(" 🪫 Your Mac Battery is low! Please charge 🔌").await.expect("Failed to call telegram function on battery");
+        telegram::send_telegram_message(" 🪫 Your Mac Battery is low! Please charge 🔌")
+            .await
+            .expect("Failed to call telegram function on battery");
     }
 
     Ok(report)
