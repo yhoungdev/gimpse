@@ -3,6 +3,7 @@ pub fn convert_byte_to_readable(param: u64) -> String {
     const MB: u64 = 1024 * KB;
     const GB: u64 = 1024 * MB;
     const TB: u64 = 1024 * GB;
+    const PB: u64 = 1024 * TB;
 
     let size = param as f64;
 
