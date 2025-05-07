@@ -1,10 +1,26 @@
 use crate::utils::telegram;
-use std::alloc::System;
-use sysinfo::{Component, Cpu, Disk, Networks, System};
+use sysinfo::{CpuExt, System, SystemExt};
+const THRESHOLD: f32 = 50.0;
 
-const TREASHOLD: f32 = 50.0;
-async fn monitor_cpu() {
+pub async fn monitor_cpu() {
     let mut sys = System::new_all();
+    sys.refresh_cpu();
+
     let mut report = String::new();
-    sys.refresh_all();
+
+    for (i, cpu) in sys.cpus().iter().enumerate() {
+        let usage = cpu.cpu_usage();
+        if usage > THRESHOLD {
+            report.push_str(&format!(
+                "⚠️ CPU Core {} is spiking: {:.2}% usage\n",
+                i, usage
+            ));
+        }
+    }
+
+    if !report.is_empty() {
+        telegram::send_telegram_message(&report)
+            .await
+            .expect("Failed to send message");
+    }
 }
