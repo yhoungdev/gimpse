@@ -18,7 +18,8 @@ pub async fn monitor_disk_usage() {
         let file_system = std::str::from_utf8(disk.file_system()).unwrap_or_default();
         let disk_name = disk.name().to_string_lossy();
 
-        if file_system.contains("tmpfs") || file_system.contains("devtmpfs")
+        if file_system.contains("tmpfs")
+            || file_system.contains("devtmpfs")
             || mount_point.starts_with("/media")
             || mount_point.starts_with("/run/media")
             || disk.is_removable()
